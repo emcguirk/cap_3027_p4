@@ -14,54 +14,64 @@ boolean useBlend;
 float heightMod;
 float snowThresh;
 
+String terrainFile;
+
 void setup() {
   size(1200, 800, P3D);
 
   cp5 = new ControlP5(this);
   oCamera = new OrbitCamera();
-  
+
   cp5.addSlider("rows")
-     .setPosition(20, 20)
-     .setRange(1, 100)
-     .setValue(10);
-     
+    .setPosition(20, 20)
+    .setRange(1, 100)
+    .setValue(10);
+
   cp5.addSlider("columns")
-     .setPosition(20, 40)
-     .setRange(1, 100)
-     .setValue(10);
-     
+    .setPosition(20, 40)
+    .setRange(1, 100)
+    .setValue(10);
+
   cp5.addSlider("terrainSize")
-     .setPosition(20, 60)
-     .setRange(20, 50)
-     .setValue(30f)
-     .setLabel("Terrain Size");
-     
+    .setPosition(20, 60)
+    .setRange(20, 50)
+    .setValue(30f)
+    .setLabel("Terrain Size");
+
+  cp5.addButton("Generate")
+    .setPosition(20, 80);
+
+  cp5.addTextfield("terrainFile")
+    .setPosition(20, 120)
+    .setValue("terrain1")
+    .setLabel("Load from File");
+
   cp5.addToggle("useStroke")
-     .setPosition(220, 20)
-     .setValue(false)
-     .setLabel("stroke");
-     
+    .setPosition(220, 20)
+    .setValue(false)
+    .setLabel("stroke");
+
   cp5.addToggle("useColor")
-     .setPosition(280, 20)
-     .setValue(false)
-     .setLabel("color");
-     
+    .setPosition(280, 20)
+    .setValue(false)
+    .setLabel("color");
+
   cp5.addToggle("useBlend")
-     .setPosition(340, 20)
-     .setValue(false)
-     .setLabel("blend");
-     
+    .setPosition(340, 20)
+    .setValue(false)
+    .setLabel("blend");
+
   cp5.addSlider("heightMod")
-     .setPosition(220, 60)
-     .setRange(-5.0, 5.0)
-     .setValue(1.00)
-     .setLabel("Height Modifier");
-  
+    .setPosition(220, 60)
+    .setRange(-5.0, 5.0)
+    .setValue(1.00)
+    .setLabel("Height Modifier");
+
   cp5.addSlider("snowThresh")
-     .setPosition(220, 80)
-     .setRange(1, 5)
-     .setValue(5)
-     .setLabel("Snow Threshold");
+    .setPosition(220, 80)
+    .setRange(1, 5)
+    .setValue(5)
+    .setLabel("Snow Threshold");
 }
 
 void draw() {
@@ -92,7 +102,7 @@ void draw() {
 
   perspective();
   camera();
-  
+
   println(rows);
 }
 
