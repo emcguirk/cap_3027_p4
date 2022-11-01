@@ -139,7 +139,22 @@ void mouseDragged() {
   if (cp5.isMouseOver()) return;
   float deltaX = (mouseX - pmouseX) * 0.15f;
   float deltaY = (mouseY - pmouseY) * 0.15f;
-
-  oCamera.phi = oCamera.phi + deltaX >= 179f ? 179f : oCamera.phi + deltaX;
-  oCamera.theta = oCamera.theta + deltaY >= 179f ? 179f : oCamera.theta + deltaY;
+  
+  float newPhi = oCamera.phi + deltaX;
+  if (newPhi < 0) {
+    oCamera.phi = 0f;
+  } else if (newPhi > 179) {
+    oCamera.phi = 179f;
+  } else {
+    oCamera.phi = newPhi;
+  }
+  
+  float newTheta = oCamera.theta + deltaY;
+  if (newTheta < 0) {
+    oCamera.theta = 0;
+  } else if (newTheta > 179f) {
+    oCamera.theta = 179;
+  } else {
+    oCamera.theta = newTheta;
+  }
 }
