@@ -88,7 +88,7 @@ void draw() {
   oCamera.Update();
 
 
-  /* Old Grid Method */
+  ///* Old Grid Method */
   //// Draw rest of grid
   //stroke(255);
   //for (int i = -100; i <= 100; i += 10) {
@@ -107,17 +107,27 @@ void draw() {
 
   /* New Grid Method */
   pushMatrix();
-  translate(-gridSize/2, 0, -gridSize/2);
-  for (int i = 0; i < rows; i++) { 
-    
-  }
+    translate(-gridSize/2, 0, -gridSize/2);
+    for (int i = 0; i < columns; i++) {
+      pushMatrix();
+        translate(gridSize/columns * i, 0, 0);
+        box(1);
+        pushMatrix();
+          for (int j = 0; j < rows; j++) {
+            pushMatrix();
+              translate(0, 0, gridSize/rows * j);
+              box(1);
+            popMatrix();
+          }
+        popMatrix();
+      popMatrix();
+    }
+  popMatrix();
   
 
 
   perspective();
   camera();
-
-  println(rows);
 }
 
 void mouseWheel(MouseEvent event) {

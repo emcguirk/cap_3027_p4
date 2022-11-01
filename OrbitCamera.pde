@@ -15,10 +15,9 @@ class OrbitCamera {
     targets = new ArrayList<>();
     lookAtTarget = new PVector(0f, 0f, 0f);
 
-    radius = 200;
-    phi = 0f;
+    radius = 20;
+    phi = 92f;
     theta = 120f;
-    println("Phi: " + phi + " Theta: " + theta);
   }
 
   void Update() {
