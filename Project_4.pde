@@ -3,10 +3,12 @@ import controlP5.*;
 OrbitCamera oCamera;
 ControlP5 cp5;
 
+/* Grid Data */
 int rows;
 int columns;
-float terrainSize;
+float gridSize;
 
+/* ControlP5 Data */
 boolean useStroke;
 boolean useColor;
 boolean useBlend;
@@ -15,6 +17,12 @@ float heightMod;
 float snowThresh;
 
 String terrainFile;
+
+/* Terrain Data */
+
+ArrayList<PVector> terrainVectors;
+ArrayList<Integer> triangleIndices;
+
 
 void setup() {
   size(1200, 800, P3D);
@@ -32,7 +40,7 @@ void setup() {
     .setRange(1, 100)
     .setValue(10);
 
-  cp5.addSlider("terrainSize")
+  cp5.addSlider("gridSize")
     .setPosition(20, 60)
     .setRange(20, 50)
     .setValue(30f)
@@ -80,24 +88,30 @@ void draw() {
   oCamera.Update();
 
 
-  // Draw rest of grid
-  stroke(255);
-  for (int i = -100; i <= 100; i += 10) {
-    // X values
-    line(i, 0, -100, i, 0, 100);
+  /* Old Grid Method */
+  //// Draw rest of grid
+  //stroke(255);
+  //for (int i = -100; i <= 100; i += 10) {
+  //  // X values
+  //  line(i, 0, -100, i, 0, 100);
 
-    // Z values
-    line(-100, 0, i, 100, 0, i);
+  //  // Z values
+  //  line(-100, 0, i, 100, 0, i);
+  //}
+  //// Draw Origin
+  //stroke(255, 0, 0);
+  //line(-100, 0, 0, 100, 0, 0);
+
+  //stroke(0, 0, 255);
+  //line(0, 0, -100, 0, 0, 100);
+
+  /* New Grid Method */
+  pushMatrix();
+  translate(-gridSize/2, 0, -gridSize/2);
+  for (int i = 0; i < rows; i++) { 
+    
   }
-  // Draw Origin
-  stroke(255, 0, 0);
-  line(-100, 0, 0, 100, 0, 0);
-
-  stroke(0, 0, 255);
-  line(0, 0, -100, 0, 0, 100);
-
-
-  box(1.5);
+  
 
 
   perspective();
