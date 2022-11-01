@@ -57,8 +57,14 @@ class OrbitCamera {
   }
 
   void Zoom(float f) {
-    radius += 10*f;
-    radius = (radius + 10*f <= 5) ? 5 : radius + 10*f;
+    float newR = radius + 15*f;
+    if (newR < 10) {
+      radius = 10;
+    } else if (newR > 200) {
+      newR = 200;
+    } else {
+      radius = newR;
+    }
   }
 
   float findX() {
