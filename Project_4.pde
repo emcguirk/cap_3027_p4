@@ -18,12 +18,17 @@ float snowThresh;
 
 String terrainFile;
 
+boolean ready;
+
 /* Terrain Data */
 Terrain terrain;
 
 
 void setup() {
   size(1200, 800, P3D);
+  ready = false;
+  
+  terrainFile = "terrain1";
 
   cp5 = new ControlP5(this);
   oCamera = new OrbitCamera();
@@ -79,14 +84,14 @@ void setup() {
     .setValue(5)
     .setLabel("Snow Threshold");
     
-    terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile);
+    terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, null);
+    ready = true;
 }
 
 void draw() {
   background(0);
   perspective(radians(90f), width/(float)height, 0.1, 1000);
   oCamera.Update();
-  
   terrain.Update();
 
   perspective();
@@ -123,5 +128,6 @@ void mouseDragged() {
 }
 
 void generate() {
-  terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile);
+  terrainFile = cp5.get(Textfield.class, "terrainFile").getText();
+  terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile); //<>//
 }
