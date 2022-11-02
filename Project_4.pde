@@ -86,26 +86,7 @@ void draw() {
   background(0);
   perspective(radians(90f), width/(float)height, 0.1, 1000);
   oCamera.Update();
-
-
-  ///* Old Grid Method */
-  //// Draw rest of grid
-  //stroke(255);
-  //for (int i = -100; i <= 100; i += 10) {
-  //  // X values
-  //  line(i, 0, -100, i, 0, 100);
-
-  //  // Z values
-  //  line(-100, 0, i, 100, 0, i);
-  //}
-  //// Draw Origin
-  //stroke(255, 0, 0);
-  //line(-100, 0, 0, 100, 0, 0);
-
-  //stroke(0, 0, 255);
-  //line(0, 0, -100, 0, 0, 100);
-
-  /* New Grid Method */
+  
   terrain.Update();
 
   perspective();
