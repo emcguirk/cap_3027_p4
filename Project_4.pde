@@ -19,9 +19,7 @@ float snowThresh;
 String terrainFile;
 
 /* Terrain Data */
-
-ArrayList<PVector> terrainVectors;
-ArrayList<Integer> triangleIndices;
+Terrain terrain;
 
 
 void setup() {
@@ -46,7 +44,7 @@ void setup() {
     .setValue(30f)
     .setLabel("Terrain Size");
 
-  cp5.addButton("Generate")
+  cp5.addButton("generate")
     .setPosition(20, 80);
 
   cp5.addTextfield("terrainFile")
@@ -56,7 +54,7 @@ void setup() {
 
   cp5.addToggle("useStroke")
     .setPosition(220, 20)
-    .setValue(false)
+    .setValue(true)
     .setLabel("stroke");
 
   cp5.addToggle("useColor")
@@ -80,6 +78,8 @@ void setup() {
     .setRange(1, 5)
     .setValue(5)
     .setLabel("Snow Threshold");
+    
+    terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile);
 }
 
 void draw() {
@@ -106,25 +106,7 @@ void draw() {
   //line(0, 0, -100, 0, 0, 100);
 
   /* New Grid Method */
-  pushMatrix();
-    translate(-gridSize/2, 0, -gridSize/2);
-    for (int i = 0; i < columns; i++) {
-      pushMatrix();
-        translate(gridSize/columns * i, 0, 0);
-        box(1);
-        pushMatrix();
-          for (int j = 0; j < rows; j++) {
-            pushMatrix();
-              translate(0, 0, gridSize/rows * j);
-              box(1);
-            popMatrix();
-          }
-        popMatrix();
-      popMatrix();
-    }
-  popMatrix();
-  
-
+  terrain.Update();
 
   perspective();
   camera();
@@ -142,4 +124,8 @@ void mouseDragged() {
 
   oCamera.phi = oCamera.phi + deltaX >= 179f ? 179f : oCamera.phi + deltaX;
   oCamera.theta = oCamera.theta + deltaY >= 179f ? 179f : oCamera.theta + deltaY;
+}
+
+void generate() {
+  terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile);
 }
