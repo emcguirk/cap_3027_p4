@@ -60,7 +60,7 @@ class OrbitCamera {
     if (newR < 10) {
       radius = 10;
     } else if (newR > 200) {
-      newR = 200;
+      radius = 200;
     } else {
       radius = newR;
     }
