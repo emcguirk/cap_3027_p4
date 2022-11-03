@@ -22,6 +22,8 @@ boolean ready;
 
 /* Terrain Data */
 Terrain terrain;
+PImage heightmap;
+
 
 
 void setup() {
@@ -29,6 +31,7 @@ void setup() {
   ready = false;
   
   terrainFile = "terrain1";
+  heightmap = null;
 
   cp5 = new ControlP5(this);
   oCamera = new OrbitCamera();
@@ -55,7 +58,8 @@ void setup() {
   cp5.addTextfield("terrainFile")
     .setPosition(20, 120)
     .setValue("terrain1")
-    .setLabel("Load from File");
+    .setLabel("Load from File")
+    .setAutoClear(false);
 
   cp5.addToggle("useStroke")
     .setPosition(220, 20)
@@ -84,7 +88,7 @@ void setup() {
     .setValue(5)
     .setLabel("Snow Threshold");
     
-    terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, null);
+    terrain = new Terrain(rows, columns, gridSize, useBlend);
     ready = true;
 }
 
@@ -92,7 +96,7 @@ void draw() {
   background(0);
   perspective(radians(90f), width/(float)height, 0.1, 1000);
   oCamera.Update();
-  terrain.Update();
+  terrain.Update(heightmap, heightMod, snowThresh, useColor, useStroke);
 
   perspective();
   camera();
@@ -108,14 +112,7 @@ void mouseDragged() {
   float deltaX = (mouseX - pmouseX) * 0.15f;
   float deltaY = (mouseY - pmouseY) * 0.15f;
   
-  float newPhi = oCamera.phi + deltaX;
-  if (newPhi < 0) {
-    oCamera.phi = 0f;
-  } else if (newPhi > 179) {
-    oCamera.phi = 179f;
-  } else {
-    oCamera.phi = newPhi;
-  }
+  oCamera.phi += deltaX;
   
   float newTheta = oCamera.theta + deltaY;
   if (newTheta < 0) {
@@ -129,5 +126,12 @@ void mouseDragged() {
 
 void generate() {
   terrainFile = cp5.get(Textfield.class, "terrainFile").getText();
-  terrain = new Terrain(rows, columns, gridSize, useStroke, useColor, useBlend, terrainFile); //<>//
+  heightmap = loadImage(terrainFile + ".png");
+  terrain = new Terrain(rows, columns, gridSize, useBlend); //<>//
+}
+
+void keyPressed() {
+  if (key == ENTER || key == RETURN) {
+    generate();
+  }
 }
